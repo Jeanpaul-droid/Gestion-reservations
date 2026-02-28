@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RéservationExpress - Dashboard</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Chart.js pour les graphiques -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .stat-label {
+            color: #666;
+            margin: 0;
+        }
+        
+        .table-reservations {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+        }
+        
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-calendar-check me-2"></i>RéservationExpress
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reservation.html">Réserver</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- En-tête -->
+    <header class="bg-primary text-white py-4">
+        <div class="container">
+            <h1 class="display-5 fw-bold">Tableau de bord</h1>
+            <p class="">Visualisez et gérez vos réservations</p>
+        </div>
+    </header>
+
+    <!-- Dashboard -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <!-- Statistiques -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="stat-card d-flex align-items-center">
+                        <div class="stat-icon bg-primary bg-opacity-10 text-primary me-3">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div>
+                            <p class="stat-value" id="totalReservations">0</p>
+                            <p class="stat-label">Total réservations</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="stat-card d-flex align-items-center">
+                        <div class="stat-icon bg-success bg-opacity-10 text-success me-3">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div>
+                            <p class="stat-value" id="confirmedReservations">0</p>
+                            <p class="stat-label">Confirmées</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="stat-card d-flex align-items-center">
+                        <div class="stat-icon bg-warning bg-opacity-10 text-warning me-3">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <p class="stat-value" id="pendingReservations">0</p>
+                            <p class="stat-label">En attente</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-3">
+                    <div class="stat-card d-flex align-items-center">
+                        <div class="stat-icon bg-info bg-opacity-10 text-info me-3">
+                            <i class="fas fa-euro-sign"></i>
+                        </div>
+                        <div>
+                            <p class="stat-value" id="totalRevenue">0€</p>
+                            <p class="stat-label">Chiffre d'affaires</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!-- ...existing code... -->
+            
+            <!-- Liste des réservations -->
+            <div class="table-reservations">
+                <div class="p-3 bg-white border-bottom">
+                    <h5 class="mb-0">Dernières réservations</h5>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>N° Réservation</th>
+                                <th>Client</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Montant</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservationsTableBody">
+                            <tr>
+                                <td colspan="7" class="text-center py-4">
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="visually-hidden">Chargement...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Chargement des données
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardData();
+        });
+        
+        function loadDashboardData() {
+            // Récupérer les réservations
+            const reservations = JSON.parse(localStorage.getItem('reservations') || '[]');
+            const contactMessages = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+            
+            // Mettre à jour les statistiques
+            document.getElementById('totalReservations').textContent = reservations.length;
+            
+            // Calculer le CA (en supposant que total est une chaîne comme "75€")
+            let totalRevenue = 0;
+            reservations.forEach(res => {
+                const price = parseFloat(res.total) || 0;
+                totalRevenue += price;
+            });
+            document.getElementById('totalRevenue').textContent = totalRevenue + '€';
+            
+            // Statistiques simulées
+            document.getElementById('confirmedReservations').textContent = 
+                Math.floor(reservations.length * 0.8); // 80% confirmées
+            document.getElementById('pendingReservations').textContent = 
+                Math.floor(reservations.length * 0.2); // 20% en attente
+            
+            // Afficher le tableau
+            displayReservationsTable(reservations);
+        }
+        
+        function displayReservationsTable(reservations) {
+            const tbody = document.getElementById('reservationsTableBody');
+            
+            if (reservations.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center py-4">
+                            <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                            <p>Aucune réservation pour le moment</p>
+                            <a href="reservation.html" class="btn btn-primary btn-sm">
+                                Créer une réservation
+                            </a>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            reservations.slice(-5).reverse().forEach((res, index) => {
+                const status = index % 3 === 0 ? 'confirmed' : (index % 3 === 1 ? 'pending' : 'confirmed');
+                const statusClass = status === 'confirmed' ? 'status-confirmed' : 
+                                   (status === 'pending' ? 'status-pending' : 'status-cancelled');
+                const statusText = status === 'confirmed' ? 'Confirmée' : 
+                                  (status === 'pending' ? 'En attente' : 'Annulée');
+                
+                html += `
+                    <tr>
+                        <td><strong>${res.number || 'RES-2026-00' + (index+1)}</strong></td>
+                        <td>Client ${index+1}</td>
+                        <td>${res.service || 'Service Standard'}</td>
+                        <td>${res.datetime || '15/03/2026'}</td>
+                        <td>${res.total || '75€'}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary" onclick="viewReservation('${res.number}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteReservation('${res.number}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        function viewReservation(number) {
+            alert('Affichage de la réservation : ' + number);
+            // Rediriger vers la page de confirmation
+            window.location.href = 'confirmation.html?num=' + number;
+        }
+        
+        function deleteReservation(number) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cette réservation ?')) {
+                const reservations = JSON.parse(localStorage.getItem('reservations') || '[]');
+                const updated = reservations.filter(r => r.number !== number);
+                localStorage.setItem('reservations', JSON.stringify(updated));
+                loadDashboardData(); // Recharger
+                alert('Réservation supprimée');
+            }
+        }
+    </script>
+</body>
+</html>

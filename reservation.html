@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RéservationExpress - Réserver</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome pour les icônes (optionnel mais sympa) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Notre CSS personnalisé -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* Style temporaire pour la page de réservation */
+        .reservation-form {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .price-summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin: 0 5px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step.active {
+            background: #0d6efd;
+            color: white;
+        }
+        
+        .step.completed {
+            background: #198754;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation (identique à l'accueil) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-calendar-check me-2"></i>RéservationExpress
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="reservation.html">Réserver</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- En-tête de la page -->
+    <header class="bg-primary text-white py-4">
+        <div class="container">
+            <h1 class="display-5 fw-bold">
+                <i class="fas fa-pencil-alt me-2"></i>Formulaire de réservation
+            </h1>
+            <p class="">Remplissez les étapes ci-dessous pour réserver votre service</p>
+        </div>
+    </header>
+
+    <!-- Section principale de réservation -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Formulaire de réservation (colonne de gauche) -->
+                <div class="col-lg-8">
+                    <div class="reservation-form">
+                        
+                        <!-- Indicateur d'étapes -->
+                        <div class="step-indicator mb-4">
+                            <div class="step active" id="step1-indicator">1. Service</div>
+                            <div class="step" id="step2-indicator">2. Date & Heure</div>
+                            <div class="step" id="step3-indicator">3. Coordonnées</div>
+                            <div class="step" id="step4-indicator">4. Confirmation</div>
+                        </div>
+                        
+                        <!-- Étape 1: Choix du service -->
+                        <div class="form-step active" id="step1">
+                            <h3 class="mb-4">Choisissez votre service</h3>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Type de service *</label>
+                                <select class="form-select" id="serviceType" required>
+                                    <option value="">Sélectionnez un service</option>
+                                    <option value="standard" data-price="50">Service Standard - 50€</option>
+                                    <option value="premium" data-price="100">Service Premium - 100€</option>
+                                    <option value="pro" data-price="200">Service Pro - 200€</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Options supplémentaires</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="option1" data-price="15">
+                                    <label class="form-check-label" for="option1">
+                                        Accès prioritaire (+15€)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="option2" data-price="25">
+                                    <label class="form-check-label" for="option2">
+                                        Support 24/7 (+25€)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="option3" data-price="10">
+                                    <label class="form-check-label" for="option3">
+                                        Matériel inclus (+10€)
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary" onclick="nextStep(2)">Suivant <i class="fas fa-arrow-right ms-2"></i></button>
+                            </div>
+                        </div>
+                        
+                        <!-- Étape 2: Date et heure -->
+                        <div class="form-step" id="step2">
+                            <h3 class="mb-4">Choisissez la date et l'heure</h3>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Date souhaitée *</label>
+                                <input type="date" class="form-control" id="reservationDate" required min="">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Heure souhaitée *</label>
+                                <select class="form-select" id="reservationTime" required>
+                                    <option value="">Sélectionnez une heure</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                </select>
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>Les créneaux sont disponibles du lundi au vendredi.
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-secondary" onclick="prevStep(1)"><i class="fas fa-arrow-left me-2"></i>Précédent</button>
+                                <button class="btn btn-primary" onclick="nextStep(3)">Suivant <i class="fas fa-arrow-right ms-2"></i></button>
+                            </div>
+                        </div>
+                        
+                        <!-- Étape 3: Coordonnées -->
+                        <div class="form-step" id="step3">
+                            <h3 class="mb-4">Vos coordonnées</h3>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Prénom *</label>
+                                    <input type="text" class="form-control" id="firstName" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Nom *</label>
+                                    <input type="text" class="form-control" id="lastName" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" required>
+                                <div class="invalid-feedback">Veuillez entrer un email valide</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Téléphone *</label>
+                                <input type="tel" class="form-control" id="phone" required pattern="[0-9]{10}">
+                                <small class="text-muted">Format: 0612345678</small>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Notes supplémentaires</label>
+                                <textarea class="form-control" id="notes" rows="3" placeholder="Informations complémentaires..."></textarea>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-secondary" onclick="prevStep(2)"><i class="fas fa-arrow-left me-2"></i>Précédent</button>
+                                <button class="btn btn-primary" onclick="nextStep(4)">Suivant <i class="fas fa-arrow-right ms-2"></i></button>
+                            </div>
+                        </div>
+                        
+                        <!-- Étape 4: Confirmation -->
+                        <div class="form-step" id="step4">
+                            <h3 class="mb-4">Confirmez votre réservation</h3>
+                            
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Récapitulatif</h5>
+                                    <table class="table">
+                                        <tr>
+                                            <td>Service:</td>
+                                            <td class="text-end" id="summary-service">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Date & Heure:</td>
+                                            <td class="text-end" id="summary-datetime">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Options:</td>
+                                            <td class="text-end" id="summary-options">Aucune</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Total:</strong></td>
+                                            <td class="text-end"><strong id="summary-total">0€</strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="acceptTerms" required>
+                                <label class="form-check-label" for="acceptTerms">
+                                    J'accepte les conditions générales *
+                                </label>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-secondary" onclick="prevStep(3)"><i class="fas fa-arrow-left me-2"></i>Précédent</button>
+                                <button class="btn btn-success" onclick="confirmReservation()">
+                                    <i class="fas fa-check-circle me-2"></i>Confirmer la réservation
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Résumé du prix (colonne de droite) -->
+                <div class="col-lg-4">
+                    <div class="price-summary sticky-top" style="top: 20px;">
+                        <h4 class="mb-3">Récapitulatif des prix</h4>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Service de base:</span>
+                            <span id="base-price">0€</span>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Options:</span>
+                            <span id="options-price">0€</span>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="d-flex justify-content-between fw-bold">
+                            <span>Total TTC:</span>
+                            <span id="total-price" class="fs-4">0€</span>
+                        </div>
+                        
+                        <hr>
+                        
+                        <p class="small mb-0">
+                            <i class="fas fa-lock me-1"></i>
+                            Paiement sécurisé - Aucune carte demandée maintenant
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de confirmation -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">
+                        <i class="fas fa-check-circle me-2"></i>Réservation confirmée !
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Votre réservation a été enregistrée avec succès.</p>
+                    <p><strong>Numéro de réservation :</strong> <span id="reservationNumber">RES-2026-001</span></p>
+                    <p>Un email de confirmation vous a été envoyé.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="index.html" class="btn btn-primary">Retour à l'accueil</a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2026 RéservationExpress. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Notre JS de réservation -->
+    <script src="js/reservation.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RéservationExpress - Accueil</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Notre CSS personnalisé -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">RéservationExpress</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="reservation.html">Réserver</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                <!-- button de connexion -->
+                <div class="">
+                    <button class="btn btn-outline-primary">Se connecter</button>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Section Hero (En-tête accrocheur) -->
+    <header class="py-5 w-100">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold">Bienvenue sur RéservationExpress</h1>
+            <p class="">Réservez vos services en ligne simplement et rapidement</p>
+            <a href="reservation.html" class="btn btn-primary btn-lg">Réserver maintenant</a>
+        </div>
+    </header>
+
+    <!-- Section Services (Aperçu) -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4 fw-bold">Nos services populaires</h2>
+            <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-lg border-0 rounded-4 h-100 position-relative" style="background:linear-gradient(120deg,#e3f2fd 60%,#fff 100%);">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3">
+                                    <span style="font-size:2.5rem;color:#0d6efd;"><i class="fas fa-clock"></i></span>
+                                </div>
+                                <h5 class="fw-bold mb-2" style="color:#0d6efd;font-size:1.5rem;">Standard</h5>
+                                <p class="mb-3 text-secondary">Idéal pour les besoins quotidiens. Service rapide et efficace.</p>
+                                <div class="mb-3">
+                                    <span class="fs-4 fw-bold text-primary">50€</span>
+                                    <span class="text-muted">/séance</span>
+                                </div>
+                                <a href="reservation.html" class="btn btn-outline-primary px-4 py-2 fw-bold rounded-pill">Choisir</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-lg border-0 rounded-4 h-100 position-relative" style="background:linear-gradient(120deg,#fffde4 60%,#fff 100%);">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3">
+                                    <span style="font-size:2.5rem;color:#ffc107;"><i class="fas fa-star"></i></span>
+                                </div>
+                                <h5 class="fw-bold mb-2" style="color:#ffc107;font-size:1.5rem;">Premium</h5>
+                                <p class="mb-3 text-secondary">Accès prioritaire et fonctionnalités exclusives.</p>
+                                <div class="mb-3">
+                                    <span class="fs-4 fw-bold text-warning">100€</span>
+                                    <span class="text-muted">/séance</span>
+                                </div>
+                                <a href="reservation.html" class="btn btn-warning px-4 py-2 fw-bold rounded-pill text-dark">Choisir</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-lg border-0 rounded-4 h-100 position-relative" style="background:linear-gradient(120deg,#e0ffe4 60%,#fff 100%);">
+                            <div class="card-body text-center p-4">
+                                <div class="mb-3">
+                                    <span style="font-size:2.5rem;color:#20c997;"><i class="fas fa-briefcase"></i></span>
+                                </div>
+                                <h5 class="fw-bold mb-2" style="color:#20c997;font-size:1.5rem;">Pro</h5>
+                                <p class="mb-3 text-secondary">Solution complète pour les professionnels.</p>
+                                <div class="mb-3">
+                                    <span class="fs-4 fw-bold text-success">200€</span>
+                                    <span class="text-muted">/séance</span>
+                                </div>
+                                <a href="reservation.html" class="btn btn-success px-4 py-2 fw-bold rounded-pill">Choisir</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pied de page -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2026 RéservationExpress. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS (nécessaire pour le menu responsive) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Notre JS principal -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
